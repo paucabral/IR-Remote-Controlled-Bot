@@ -23,6 +23,7 @@ int trigPin = 11;
 const int motor1Pin = 2;
 const int motor2Pin = 3;
 const int enablePin12 = 9;
+int speed;
 // MOTOR B
 const int motor3Pin = 4;
 const int motor4Pin = 5;
@@ -52,9 +53,9 @@ void setup()
   pinMode(A3, OUTPUT);
   lcd.begin(16, 2);
   lcd.setCursor(0, 0);
-  lcd.print("    LUCAS bot");
+  lcd.print("   IR RC 'Bot   ");
   lcd.setCursor(0, 1);
-  lcd.print("Group 3 CPE41S3");
+  lcd.print("GROUP#3  CPE41S3");
   delay(2000);
   lcd.clear();
 
@@ -71,7 +72,18 @@ void loop()
 {
   int front_distance = measureDistanceFront();
   int manual_override = digitalRead(dipManOver);
-  int speed = analogRead(speedPot) / 4;
+  speed = analogRead(speedPot) / 4;
+
+  lcd.setCursor(0, 0);
+  lcd.print("MO:");
+  if (manual_override == HIGH)
+  {
+    lcd.print("ON ");
+  }
+  else
+  {
+    lcd.print("OFF");
+  }
 
   Serial.print("Front Distance: ");
   Serial.println(front_distance);
@@ -82,7 +94,7 @@ void loop()
 }
 
 // MOTOR MOVEMENTS
-void halt(int speed)
+void halt()
 {
   analogWrite(enablePin12, speed);
   analogWrite(enablePin34, speed);
@@ -99,10 +111,12 @@ void halt(int speed)
   }
 
   lcd.setCursor(0, 1);
-  lcd.print("Not Moving......");
+  lcd.print("HALT     ");
+  lcd.print("SPD:");
+  lcd.print("000");
 }
 
-void forward(int speed)
+void forward()
 {
   analogWrite(enablePin12, speed);
   analogWrite(enablePin34, speed);
@@ -119,10 +133,15 @@ void forward(int speed)
   }
 
   lcd.setCursor(0, 1);
-  lcd.print("Moving FORWARD..");
+  lcd.print("FORWARD  ");
+  lcd.setCursor(9, 1);
+  lcd.print("SPD:");
+  lcd.print("000");
+  lcd.setCursor(13, 1);
+  lcd.print(speed);
 }
 
-void backward(int speed)
+void backward()
 {
   analogWrite(enablePin12, speed);
   analogWrite(enablePin34, speed);
@@ -139,10 +158,15 @@ void backward(int speed)
   }
 
   lcd.setCursor(0, 1);
-  lcd.print("Moving BACKWARD.");
+  lcd.print("BACKWARD ");
+  lcd.setCursor(9, 1);
+  lcd.print("SPD:");
+  lcd.print("000");
+  lcd.setCursor(13, 1);
+  lcd.print(speed);
 }
 
-void left(int speed)
+void left()
 {
   analogWrite(enablePin12, speed);
   analogWrite(enablePin34, speed);
@@ -159,10 +183,15 @@ void left(int speed)
   }
 
   lcd.setCursor(0, 1);
-  lcd.print("Turning LEFT....");
+  lcd.print("LEFT     ");
+  lcd.setCursor(9, 1);
+  lcd.print("SPD:");
+  lcd.print("000");
+  lcd.setCursor(13, 1);
+  lcd.print(speed);
 }
 
-void right(int speed)
+void right()
 {
   analogWrite(enablePin12, speed);
   analogWrite(enablePin34, speed);
@@ -179,7 +208,12 @@ void right(int speed)
   }
 
   lcd.setCursor(0, 1);
-  lcd.print("Turning RIGHT...");
+  lcd.print("RIGHT    ");
+  lcd.setCursor(9, 1);
+  lcd.print("SPD:");
+  lcd.print("000");
+  lcd.setCursor(13, 1);
+  lcd.print(speed);
 }
 
 // ULTRASONIC DISTANCE MEASUREMENT
@@ -209,18 +243,18 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
 {
   if (front_distance < 10 && manual_override == HIGH)
   {
-    lcd.setCursor(0, 0);
-    lcd.print("OBSTACLEDETECTED");
+    lcd.setCursor(6, 0);
+    lcd.print("OBSTCL:YES");
     digitalWrite(buzzer, HIGH);
-    halt(speed);
+    halt();
     delay(1000);
-    backward(speed);
+    backward();
     delay(1000);
   }
   else
   {
-    lcd.setCursor(0, 0);
-    lcd.print("Normal Operation");
+    lcd.setCursor(6, 0);
+    lcd.print("OBSTCL:NO ");
     digitalWrite(buzzer, LOW);
     remoteControl(speed);
   }
@@ -236,19 +270,19 @@ void remoteControl(int speed)
     switch (value)
     {
     case forward_2:
-      forward(speed);
+      forward();
       break;
     case backward_8:
-      backward(speed);
+      backward();
       break;
     case left_4:
-      left(speed);
+      left();
       break;
     case right_6:
-      right(speed);
+      right();
       break;
     case halt_5:
-      halt(speed);
+      halt();
       break;
     }
     irrecv.resume();
