@@ -42,6 +42,9 @@ void setup()
   pinMode(motor3Pin, OUTPUT);
   pinMode(motor4Pin, OUTPUT);
 
+  // BUZZER
+  pinMode(buzzer, OUTPUT);
+
   // LCD DECLARATIONS
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
@@ -208,6 +211,7 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
   {
     lcd.setCursor(0, 0);
     lcd.print("OBSTACLEDETECTED");
+    digitalWrite(buzzer, HIGH);
     halt(speed);
     delay(1000);
     backward(speed);
@@ -217,6 +221,7 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
   {
     lcd.setCursor(0, 0);
     lcd.print("Normal Operation");
+    digitalWrite(buzzer, LOW);
     remoteControl(speed);
   }
 }
