@@ -6,6 +6,16 @@ LiquidCrystal lcd(12, 13, A0, A1, A2, A3);
 #define PIN A5
 #define NUMPIXELS 4
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+// IR Remote
+#include <IRremote.h>
+const int irSensor = 7;
+IRrecv irrecv(irSensor);
+decode_results results;
+const int halt_5 = 43095;
+const int forward_2 = 34935;
+const int left_4 = 10455;
+const int right_6 = 26775;
+const int backward_8 = 39015;
 // Ultrasonic Sensor Front
 int echoPin = 11;
 int trigPin = 11;
@@ -19,8 +29,6 @@ const int motor4Pin = 5;
 const int enablePin34 = 8;
 // Buzzer
 const int buzzer = 10;
-// Infrared
-const int irSensor = 7;
 // Potentiometer
 const int speedPot = A4;
 // DIP Switch
@@ -49,6 +57,11 @@ void setup()
 
   // SERIAL COMMUNICATION
   Serial.begin(9600);
+
+  // IR SIGNAL
+  Serial.println("Enabling IRin");
+  irrecv.enableIRIn();
+  Serial.println("Enabled IRin");
 }
 
 void loop()
@@ -204,6 +217,35 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
   {
     lcd.setCursor(0, 0);
     lcd.print("Normal Operation");
-    forward(speed);
+    remoteControl(speed);
+  }
+}
+
+// IR REMOTE CONTROL
+void remoteControl(int speed)
+{
+  if (irrecv.decode(&results))
+  {                                     //irrecv.decode(&results) returns true if anything is recieved, and stores info in varible results
+    unsigned int value = results.value; //Get the value of results as an unsigned int, so we can use switch case
+    Serial.println(value);
+    switch (value)
+    {
+    case forward_2:
+      forward(speed);
+      break;
+    case backward_8:
+      backward(speed);
+      break;
+    case left_4:
+      left(speed);
+      break;
+    case right_6:
+      right(speed);
+      break;
+    case halt_5:
+      halt(speed);
+      break;
+    }
+    irrecv.resume(); // Receive the next value
   }
 }
