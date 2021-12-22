@@ -30,3 +30,5 @@ An IR remote controlled robot with various features using Arduino.
 * LiquidCrystal
 * IRremote
 * Adafruit NeoPixel
+
+**NOTE:** The following code and circuit was tested and simulated using [TinkerCAD](https://www.tinkercad.com/).
