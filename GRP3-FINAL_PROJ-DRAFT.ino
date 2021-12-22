@@ -225,8 +225,8 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
 void remoteControl(int speed)
 {
   if (irrecv.decode(&results))
-  {                                     //irrecv.decode(&results) returns true if anything is recieved, and stores info in varible results
-    unsigned int value = results.value; //Get the value of results as an unsigned int, so we can use switch case
+  {
+    unsigned int value = results.value;
     Serial.println(value);
     switch (value)
     {
@@ -246,6 +246,6 @@ void remoteControl(int speed)
       halt(speed);
       break;
     }
-    irrecv.resume(); // Receive the next value
+    irrecv.resume();
   }
 }
