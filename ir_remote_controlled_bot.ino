@@ -247,9 +247,11 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
     lcd.print("OBSTCL:YES");
     digitalWrite(buzzer, HIGH);
     halt();
-    delay(1000);
+    delay(500);
     backward();
     delay(1000);
+    halt();
+    delay(500);
   }
   else
   {
