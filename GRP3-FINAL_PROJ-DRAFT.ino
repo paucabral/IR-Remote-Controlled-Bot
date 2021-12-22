@@ -23,13 +23,13 @@ const int dipManOver = 6;
 
 void setup()
 {
+  // MOTOR PINS
   pinMode(motor1Pin, OUTPUT);
   pinMode(motor2Pin, OUTPUT);
   pinMode(motor3Pin, OUTPUT);
   pinMode(motor4Pin, OUTPUT);
-  digitalWrite(enablePin12, HIGH);
-  digitalWrite(enablePin34, HIGH);
 
+  // LCD DECLARATIONS
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
   pinMode(A2, OUTPUT);
@@ -41,6 +41,8 @@ void setup()
   lcd.print("Group 3 CPE41S3");
   delay(2000);
   lcd.clear();
+
+  // SERIAL COMMUNICATION
   Serial.begin(9600);
 }
 
@@ -48,18 +50,21 @@ void loop()
 {
   int front_distance = measureDistanceFront();
   int manual_override = digitalRead(dipManOver);
+  int speed = analogRead(speedPot) / 4;
 
   Serial.print("Front Distance: ");
   Serial.println(front_distance);
   Serial.print("Manual Override: ");
   Serial.println(manual_override);
 
-  obstacleDetection(front_distance, manual_override);
+  obstacleDetection(front_distance, manual_override, speed);
 }
 
 // MOTOR MOVEMENTS
-void halt()
+void halt(int speed)
 {
+  analogWrite(enablePin12, speed);
+  analogWrite(enablePin34, speed);
   digitalWrite(motor1Pin, LOW);
   digitalWrite(motor2Pin, LOW);
   digitalWrite(motor3Pin, LOW);
@@ -69,8 +74,10 @@ void halt()
   lcd.print("Not Moving......");
 }
 
-void forward()
+void forward(int speed)
 {
+  analogWrite(enablePin12, speed);
+  analogWrite(enablePin34, speed);
   digitalWrite(motor1Pin, HIGH);
   digitalWrite(motor2Pin, LOW);
   digitalWrite(motor3Pin, HIGH);
@@ -80,8 +87,10 @@ void forward()
   lcd.print("Moving FORWARD..");
 }
 
-void backward()
+void backward(int speed)
 {
+  analogWrite(enablePin12, speed);
+  analogWrite(enablePin34, speed);
   digitalWrite(motor1Pin, LOW);
   digitalWrite(motor2Pin, HIGH);
   digitalWrite(motor3Pin, LOW);
@@ -91,8 +100,10 @@ void backward()
   lcd.print("Moving BACKWARD.");
 }
 
-void left()
+void left(int speed)
 {
+  analogWrite(enablePin12, speed);
+  analogWrite(enablePin34, speed);
   digitalWrite(motor1Pin, HIGH);
   digitalWrite(motor2Pin, LOW);
   digitalWrite(motor3Pin, LOW);
@@ -102,8 +113,10 @@ void left()
   lcd.print("Turning LEFT....");
 }
 
-void right()
+void right(int speed)
 {
+  analogWrite(enablePin12, speed);
+  analogWrite(enablePin34, speed);
   digitalWrite(motor1Pin, LOW);
   digitalWrite(motor2Pin, HIGH);
   digitalWrite(motor3Pin, HIGH);
@@ -136,21 +149,21 @@ long microsecondsToInches(long microseconds)
   return microseconds / 74 / 2;
 }
 
-void obstacleDetection(int front_distance, int manual_override)
+void obstacleDetection(int front_distance, int manual_override, int speed)
 {
   if (front_distance < 10 && manual_override == HIGH)
   {
     lcd.setCursor(0, 0);
     lcd.print("OBSTACLEDETECTED");
-    halt();
+    halt(speed);
     delay(1000);
-    backward();
+    backward(speed);
     delay(1000);
   }
   else
   {
     lcd.setCursor(0, 0);
     lcd.print("Normal Operation");
-    forward();
+    forward(speed);
   }
 }
