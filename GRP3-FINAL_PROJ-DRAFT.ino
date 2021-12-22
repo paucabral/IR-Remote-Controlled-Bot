@@ -1,6 +1,11 @@
+// LCD
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 13, A0, A1, A2, A3);
-
+// NeoPixel LED
+#include <Adafruit_NeoPixel.h>
+#define PIN A5
+#define NUMPIXELS 4
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 // Ultrasonic Sensor Front
 int echoPin = 11;
 int trigPin = 11;
@@ -70,6 +75,13 @@ void halt(int speed)
   digitalWrite(motor3Pin, LOW);
   digitalWrite(motor4Pin, LOW);
 
+  pixels.clear();
+  for (int i = 0; i < NUMPIXELS; i++)
+  {
+    pixels.setPixelColor(i, pixels.Color(255, 0, 0));
+    pixels.show();
+  }
+
   lcd.setCursor(0, 1);
   lcd.print("Not Moving......");
 }
@@ -82,6 +94,13 @@ void forward(int speed)
   digitalWrite(motor2Pin, LOW);
   digitalWrite(motor3Pin, HIGH);
   digitalWrite(motor4Pin, LOW);
+
+  pixels.clear();
+  for (int i = 0; i < NUMPIXELS; i++)
+  {
+    pixels.setPixelColor(i, pixels.Color(0, 255, 0));
+    pixels.show();
+  }
 
   lcd.setCursor(0, 1);
   lcd.print("Moving FORWARD..");
@@ -96,6 +115,13 @@ void backward(int speed)
   digitalWrite(motor3Pin, LOW);
   digitalWrite(motor4Pin, HIGH);
 
+  pixels.clear();
+  for (int i = 0; i < NUMPIXELS; i++)
+  {
+    pixels.setPixelColor(i, pixels.Color(255, 102, 0));
+    pixels.show();
+  }
+
   lcd.setCursor(0, 1);
   lcd.print("Moving BACKWARD.");
 }
@@ -109,6 +135,13 @@ void left(int speed)
   digitalWrite(motor3Pin, LOW);
   digitalWrite(motor4Pin, HIGH);
 
+  pixels.clear();
+  for (int i = 0; i < NUMPIXELS; i++)
+  {
+    pixels.setPixelColor(i, pixels.Color(140, 0, 255));
+    pixels.show();
+  }
+
   lcd.setCursor(0, 1);
   lcd.print("Turning LEFT....");
 }
@@ -121,6 +154,13 @@ void right(int speed)
   digitalWrite(motor2Pin, HIGH);
   digitalWrite(motor3Pin, HIGH);
   digitalWrite(motor4Pin, LOW);
+
+  pixels.clear();
+  for (int i = 0; i < NUMPIXELS; i++)
+  {
+    pixels.setPixelColor(i, pixels.Color(255, 0, 212));
+    pixels.show();
+  }
 
   lcd.setCursor(0, 1);
   lcd.print("Turning RIGHT...");
