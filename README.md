@@ -15,12 +15,9 @@ An IR remote controlled robot with various features using Arduino.
 * 1 x Ultrasonic Distance Sensor (3 pin)
 * 1 x 9V Battery
 * 1 x LCD (16x2)
-<br>
-
 
 ### Circuit Diagram
 <img src="assets/circuit-diagram.PNG">
-<br>
 
 ### Schematic Diagram
 <img src="assets/schematic-diagram-sheet1.PNG">
