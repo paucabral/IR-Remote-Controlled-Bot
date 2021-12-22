@@ -47,29 +47,17 @@ void setup()
 void loop()
 {
   int front_distance = measureDistanceFront();
-  Serial.println(front_distance);
-  forward();
+  int manual_override = digitalRead(dipManOver);
 
-  if (front_distance < 10)
-  {
-    lcd.setCursor(0, 0);
-    lcd.print("OBSTACLEDETECTED");
-    halt();
-    delay(500);
-    backward();
-    delay(1000);
-    left();
-    delay(500);
-    right();
-    delay(500);
-  }
-  else
-  {
-    lcd.setCursor(0, 0);
-    lcd.print("Normal Operation");
-  }
+  Serial.print("Front Distance: ");
+  Serial.println(front_distance);
+  Serial.print("Manual Override: ");
+  Serial.println(manual_override);
+
+  obstacleDetection(front_distance, manual_override);
 }
 
+// MOTOR MOVEMENTS
 void halt()
 {
   digitalWrite(motor1Pin, LOW);
@@ -125,6 +113,7 @@ void right()
   lcd.print("Turning RIGHT...");
 }
 
+// ULTRASONIC DISTANCE MEASUREMENT
 int measureDistanceFront()
 {
   long duration, inches;
@@ -145,4 +134,23 @@ int measureDistanceFront()
 long microsecondsToInches(long microseconds)
 {
   return microseconds / 74 / 2;
+}
+
+void obstacleDetection(int front_distance, int manual_override)
+{
+  if (front_distance < 10 && manual_override == HIGH)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print("OBSTACLEDETECTED");
+    halt();
+    delay(1000);
+    backward();
+    delay(1000);
+  }
+  else
+  {
+    lcd.setCursor(0, 0);
+    lcd.print("Normal Operation");
+    forward();
+  }
 }
