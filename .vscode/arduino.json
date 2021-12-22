@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "GRP3-FINAL_PROJ-DRAFT.ino"
+    "sketch": "ir_remote_controlled_bot.ino"
 }
