@@ -10,7 +10,7 @@ An IR remote controlled robot with various features using Arduino.
 * 1 x Piezo Buzzer (small)
 * 1 x 220Ohm Resistor
 * 2 x 250kOhm Potentiometer
-* 1 x 16V 1microFarad Capacitor
+* 2 x 16V 1microFarad Capacitor
 * 1 x NeoPixel LED (Strip 4)
 * 1 x IR Sensor
 * 1 x IR Remote

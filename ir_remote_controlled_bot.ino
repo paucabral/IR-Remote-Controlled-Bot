@@ -27,7 +27,7 @@ int speed;
 // MOTOR B
 const int motor3Pin = 4;
 const int motor4Pin = 5;
-const int enablePin34 = 8;
+const int enablePin34 = enablePin12;
 // Buzzer
 const int buzzer = 10;
 // Potentiometer
@@ -113,7 +113,7 @@ void halt()
   lcd.setCursor(0, 1);
   lcd.print("HALT     ");
   lcd.print("SPD:");
-  lcd.print("000");
+  lcd.print("   ");
 }
 
 void forward()
@@ -136,7 +136,7 @@ void forward()
   lcd.print("FORWARD  ");
   lcd.setCursor(9, 1);
   lcd.print("SPD:");
-  lcd.print("000");
+  lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print(speed);
 }
@@ -161,7 +161,7 @@ void backward()
   lcd.print("BACKWARD ");
   lcd.setCursor(9, 1);
   lcd.print("SPD:");
-  lcd.print("000");
+  lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print(speed);
 }
@@ -186,7 +186,7 @@ void left()
   lcd.print("LEFT     ");
   lcd.setCursor(9, 1);
   lcd.print("SPD:");
-  lcd.print("000");
+  lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print(speed);
 }
@@ -211,7 +211,7 @@ void right()
   lcd.print("RIGHT    ");
   lcd.setCursor(9, 1);
   lcd.print("SPD:");
-  lcd.print("000");
+  lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print(speed);
 }
