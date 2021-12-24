@@ -241,7 +241,7 @@ long microsecondsToInches(long microseconds)
 
 void obstacleDetection(int front_distance, int manual_override, int speed)
 {
-  if (front_distance < 10 && manual_override == HIGH)
+  if (front_distance < 10 && manual_override == LOW)
   {
     lcd.setCursor(6, 0);
     lcd.print("OBSTCL:YES");
