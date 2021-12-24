@@ -243,8 +243,8 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
 {
   if (front_distance < 10 && manual_override == LOW)
   {
-    lcd.setCursor(6, 0);
-    lcd.print("OBSTCL:YES");
+    lcd.setCursor(8, 0);
+    lcd.print("OBSTCL:1");
     digitalWrite(buzzer, HIGH);
     halt();
     delay(500);
@@ -255,10 +255,20 @@ void obstacleDetection(int front_distance, int manual_override, int speed)
   }
   else
   {
-    lcd.setCursor(6, 0);
-    lcd.print("OBSTCL:NO ");
-    digitalWrite(buzzer, LOW);
-    remoteControl(speed);
+    if (front_distance < 10)
+    {
+      lcd.setCursor(8, 0);
+      lcd.print("OBSTCL:1");
+      digitalWrite(buzzer, LOW);
+      remoteControl(speed);
+    }
+    else
+    {
+      lcd.setCursor(8, 0);
+      lcd.print("OBSTCL:0");
+      digitalWrite(buzzer, LOW);
+      remoteControl(speed);
+    }
   }
 }
 
