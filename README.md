@@ -8,7 +8,7 @@ An IR remote controlled robot with various features using Arduino.
 * 2 x Hobby Geared Motors
 * 1 x DIP Switch (DPST)
 * 1 x Piezo Buzzer (small)
-* 1 x 220Ohm Resistor
+* 2 x 220Ohm Resistor
 * 2 x 250kOhm Potentiometer
 * 2 x 16V 1microFarad Capacitor
 * 1 x NeoPixel LED (Strip 4)
