@@ -1,4 +1,4 @@
-# IR Remote Controlled Bot
+# IR Remote-Controlled Semi-Autonomous Robot
 An IR remote controlled robot with various features using Arduino.
 
 ## Hardware
